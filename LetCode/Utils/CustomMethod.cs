@@ -2,17 +2,24 @@
 
 namespace LetCode.Utils
 {
-    class CustomMethod
+    public class CustomMethod
     {
         private IWebDriver driver;
+
         public CustomMethod(IWebDriver driver)
         {
             this.driver = driver;
         }
-        public static void ClickOn(IWebDriver driver, IWebElement click)
+
+        public void ClickOn(IWebElement element) => element.Click();
+
+        public void Type(IWebElement element, string text) => element.SendKeys(text);
+
+        public string GetTitle(IWebElement element) 
         {
-            driver.click
-            }
+            string title = element.GetAttribute("title");
+            return title;
+        }
+
     }
 }
-git remote add origin https://github.com/AkSwaiti/LetCodeAutomation.git
