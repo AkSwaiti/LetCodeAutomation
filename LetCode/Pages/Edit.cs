@@ -27,7 +27,6 @@ namespace LetCode.Pages
         public void AddText(string anyText)
         {
             custom.Type(TextAndTab, anyText);
-            custom.PressOn(Keys.Tab);
         }
         public void Gettext()
         {

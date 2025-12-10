@@ -1,64 +1,66 @@
-using System.Runtime.CompilerServices;
 using LetCode.Pages;
 using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Network;
 using OpenQA.Selenium.Chrome;
-
+using OpenQA.Selenium.Interactions;
 
 namespace LetCode
 {
     public class MainTest
     {
-        IWebDriver driver;
+        private IWebDriver driver;
         private LetCodePages pages;
         private Edit test;
+        private Actions action;
+
+        public MainTest()
+        {
+            driver = new ChromeDriver();
+            pages = new LetCodePages(driver);
+            test = new Edit(driver);
+            action = new Actions(driver);
+        }
 
         [SetUp]
         public void Setup()
         {
-            driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("https://letcode.in/test");
-
-            pages = new LetCodePages(driver);
-            test = new Edit(driver);
         }
 
         [Test]
         public void Test1()
         {
+            // Navigate to Edit Page
             pages.GoToPage("Edit");
+
+            // 1. Enter full name
             test.EnterFullName("ahmad alswaiti");
-            string actual = test.Name.GetAttribute("value");
-            Console.WriteLine(actual);
-            Assert.That(actual, Is.EqualTo("ahmad alswaiti"));
+            string fullNameValue = test.Name.GetAttribute("value");
+            Console.WriteLine(fullNameValue);
+            Assert.That(fullNameValue, Is.EqualTo("ahmad alswaiti"), "Full name did not match.");
+
+            // 2. Add text and press TAB
             test.AddText(" enough");
-            Assert.That(driver.SwitchTo().ActiveElement, Is.EqualTo(test.GetData));
-            test.Gettext();
-            string actual1 = test.GetData.GetAttribute("value");
-            Assert.That(actual1, Is.EqualTo("ortonikc"));
+            action.SendKeys(Keys.Tab).Perform();
+
+            // Assert value populated after TAB
+            string dataValue = test.GetData.GetAttribute("value");
+            Console.WriteLine(dataValue);
+            Assert.That(dataValue, Is.EqualTo("ortonikc"), "Data field did not return expected value.");
+
+            // 3. Remove text from ClearMe field
             test.RemoveText();
-            Assert.That(test.ClearText.GetAttribute("value"), Is.EqualTo(string.Empty));
-            if (test.CheckFieldIfItsEnabled() == true)
-            {
-                Assert.That(test.CheckFieldIfItsEnabled(), Is.True);
-                Console.WriteLine("This Field is not Disabled");
-            }
-            else
-            {
-                Assert.That(test.CheckFieldIfItsEnabled(), Is.False);
-                Console.WriteLine("This Field is Disabled");
-            }
-            if (test.CheckFieldIfItsReadOnly() != false)
-            {
-                Assert.That(test.CheckFieldIfItsReadOnly(), Is.True);
-                Console.WriteLine(test.GetText());
-            }
-            else
-            {
-                Assert.That(test.CheckFieldIfItsReadOnly(), Is.False);
-                Console.WriteLine("this field is not readonly");
-            }
+            Assert.That(test.ClearText.GetAttribute("value"), Is.EqualTo(string.Empty), "ClearText field was not cleared.");
+
+            // 4. Check if the Disabled field is enabled
+            bool isEnabled = test.CheckFieldIfItsEnabled();
+            Console.WriteLine(isEnabled ? "This field is not disabled." : "This field is disabled.");
+            Assert.That(isEnabled, Is.EqualTo(false), "Disabled field check failed.");
+
+            // 5. Check if the ReadOnly field is readonly
+            bool isReadOnly = test.CheckFieldIfItsReadOnly();
+            Console.WriteLine(isReadOnly ? "Field is read-only." : "Field is NOT read-only.");
+            Assert.That(isReadOnly, Is.EqualTo(true), "ReadOnly field was not readonly as expected.");
         }
 
         [TearDown]
@@ -69,7 +71,6 @@ namespace LetCode
                 driver.Quit();
                 driver.Dispose();
             }
-
         }
     }
 }
