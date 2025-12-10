@@ -1,5 +1,7 @@
+using System.Runtime.CompilerServices;
 using LetCode.Pages;
 using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.Network;
 using OpenQA.Selenium.Chrome;
 
 
@@ -33,7 +35,8 @@ namespace LetCode
             test.AddText(" enough");
             Assert.That(driver.SwitchTo().ActiveElement, Is.EqualTo(test.GetData));
             test.Gettext();
-            Assert.That(test.Gettext, Is.EqualTo("ortonikc"));
+            string actual1 = test.GetData.GetAttribute("value");
+            Assert.That(actual1, Is.EqualTo("ortonikc"));
             test.RemoveText();
             Assert.That(test.ClearText.GetAttribute("value"), Is.EqualTo(string.Empty));
             if (test.CheckFieldIfItsEnabled() == true)
@@ -66,7 +69,6 @@ namespace LetCode
                 driver.Quit();
                 driver.Dispose();
             }
-            
 
         }
     }
