@@ -6,14 +6,14 @@ namespace LetCode.Pages
 {
     public class LetCodePages
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
         private CustomMethod Custom;
         private Dictionary<string, By> Elements;
 
         public LetCodePages(IWebDriver driver)
         {
-            this.driver = driver;
-            this.Custom = new CustomMethod(driver);
+            _driver = driver;
+            Custom = new CustomMethod(_driver);
 
             Elements = new Dictionary<string, By>
             {
@@ -41,9 +41,9 @@ namespace LetCode.Pages
             };
         }
 
-        public IWebElement GetPage(string pageName)
+        private IWebElement GetPage(string pageName)
         {
-            return driver.FindElement(Elements[pageName]);
+            return _driver.FindElement(Elements[pageName]);
         }
 
         public void GoToPage(string pageName)

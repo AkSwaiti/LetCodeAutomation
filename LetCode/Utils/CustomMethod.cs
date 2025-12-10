@@ -16,11 +16,11 @@ namespace LetCode.Utils
 
         public void ClickOn(IWebElement element) => element.Click();
 
+        public void ClearField(IWebElement element) => element.Clear();
         public void Type(IWebElement element, string text)
         {
-            element.Clear();
             element.SendKeys(text);
-        };
+        }
         public bool IsItEnabled(IWebElement element)
         {
             return element.Enabled;

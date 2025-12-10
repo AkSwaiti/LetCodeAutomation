@@ -1,27 +1,25 @@
 ﻿using LetCode.Utils;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LetCode.Pages
 {
-     class Edit
+    class Edit
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
         private CustomMethod custom;
+
         public Edit(IWebDriver driver)
         {
-            this.driver = driver;
-            this.custom = new CustomMethod(driver);
+            _driver = driver;
+            custom = new CustomMethod(_driver);
         }
-        private IWebElement Name => driver.FindElement(By.Id("fullName"));
-        private IWebElement TextAndTab => driver.FindElement(By.Id("join"));
-        private IWebElement ClearText => driver.FindElement(By.Id("clearMe"));
-        private IWebElement DisabledField => driver.FindElement(By.Id("noEdit"));
-        private IWebElement ReadOnly => driver.FindElement(By.Id("dontwrite"));
+        public  IWebElement Name => _driver.FindElement(By.Id("fullName"));
+
+        public IWebElement TextAndTab => _driver.FindElement(By.Id("join"));
+        public IWebElement GetData => _driver.FindElement(By.Id("getMe"));
+        public IWebElement ClearText => _driver.FindElement(By.Id("clearMe"));
+        private IWebElement DisabledField => _driver.FindElement(By.Id("noEdit"));
+        public IWebElement ReadOnly => _driver.FindElement(By.Id("dontwrite"));
         public void EnterFullName(string fullName)
         {
             custom.Type(Name, fullName);
@@ -29,26 +27,33 @@ namespace LetCode.Pages
         public void AddText(string anyText)
         {
             custom.Type(TextAndTab, anyText);
-            custom.PressOn("Tab");
+            custom.PressOn(Keys.Tab);
+        }
+        public void Gettext()
+        {
+            custom.GetValue(GetData);
+        }
+
+        public void RemoveText()
+        {
+            custom.ClearField(ClearText);
+        }
+        public bool CheckFieldIfItsEnabled()
+        {
+            return DisabledField.Enabled;
 
         }
-        public void RemoveText(IWebElement element)
-        {
-            element = ClearText;
-            element.Clear();
-        }
-        public  void CheckFieldIfItsEnabled(IWebElement element)
-        {
-            element = DisabledField;
-            custom.IsItEnabled(element);
-        }
-        public void CheckFieldIfItsReadOnly(IWebElement element, string value)
-        {
-            if (element )
-            custom.Type("anything");
-            element = ReadOnly;
-            value = custom.GetValue(element);
 
+        public string GetText()
+        {
+            string text = custom.GetValue(ReadOnly);
+            return text;
+        }
+        public bool CheckFieldIfItsReadOnly()
+        {
+            
+            string attr = ReadOnly.GetAttribute("readonly");
+            return attr != null && (attr == "true" || attr == "false");
         }
 
     }
