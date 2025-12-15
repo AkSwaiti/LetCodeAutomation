@@ -1,21 +1,29 @@
 ﻿using LetCode.Utils;
 using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace LetCode.Pages
 {
+    /// <summary>
+    /// Navigation hub for all test pages available on the letcode.in site.
+    /// Uses page object model pattern with locators stored in a dictionary.
+    /// </summary>
     public class LetCodePages
     {
-        private IWebDriver _driver;
-        private CustomMethod Custom;
-        private Dictionary<string, By> Elements;
+        private readonly IWebDriver driver;
+        private readonly CustomMethod custom;
+        private readonly Dictionary<string, By> pageLocators;
 
+        /// <summary>
+        /// Initializes the navigation hub with a web driver.
+        /// </summary>
         public LetCodePages(IWebDriver driver)
         {
-            _driver = driver;
-            Custom = new CustomMethod(_driver);
+            this.driver = driver ?? throw new ArgumentNullException(nameof(driver));
+            this.custom = new CustomMethod(this.driver);
 
-            Elements = new Dictionary<string, By>
+            pageLocators = new Dictionary<string, By>
             {
                 { "POM", By.XPath("//a[normalize-space()='Page Object Model']") },
                 { "Edit", By.XPath("//a[normalize-space()='Edit']") },
@@ -41,14 +49,21 @@ namespace LetCode.Pages
             };
         }
 
-        private IWebElement GetPage(string pageName)
-        {
-            return _driver.FindElement(Elements[pageName]);
-        }
-
+        /// <summary>
+        /// Navigates to the specified page by name.
+        /// </summary>
+        /// <param name="pageName">The page name key (e.g., "Edit", "Click", "Select")</param>
+        /// <exception cref="KeyNotFoundException">Thrown if page name is not found.</exception>
         public void GoToPage(string pageName)
         {
-            Custom.ClickOn(GetPage(pageName));
+            if (string.IsNullOrEmpty(pageName))
+                throw new ArgumentException("Page name must not be null or empty.", nameof(pageName));
+
+            if (!pageLocators.TryGetValue(pageName, out var locator))
+                throw new KeyNotFoundException($"Page '{pageName}' not found in page registry.");
+
+            var pageLink = custom.WaitUntilClickable(locator);
+            custom.ClickOn(pageLink);
         }
     }
 }
