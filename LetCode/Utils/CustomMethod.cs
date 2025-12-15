@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Drawing;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 
 
@@ -35,10 +36,20 @@ namespace LetCode.Utils
             string value = element.GetAttribute("value");
             return value;
         }
-        public void PressOn( string key)
+        public void PressOn(string key)
         {
             Actions action = new Actions(driver);
             action.SendKeys(key).Perform();
+        }
+        public void Hold(IWebElement element)
+        {
+            Actions action = new Actions(driver);
+            action.ClickAndHold(element).Pause(TimeSpan.FromSeconds(3)).Release().Perform();
+        }
+        public Point Location(IWebElement element)
+        {
+            return element.Location;
+
         }
     }
 }

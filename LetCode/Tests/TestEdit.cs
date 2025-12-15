@@ -5,18 +5,22 @@ using OpenQA.Selenium.Interactions;
 
 namespace LetCode.Tests
 {
-    public class MainTest
+    public class TestEdit
     {
         private IWebDriver driver;
         private LetCodePages pages;
-        private Edit test;
+        private EditPage test;
         private Actions action;
 
-        public MainTest()
+
+
+
+        [OneTimeSetUp]
+        public void GlobalSetup()
         {
             driver = new ChromeDriver();
             pages = new LetCodePages(driver);
-            test = new Edit(driver);
+            test = new EditPage(driver);
             action = new Actions(driver);
         }
 
@@ -28,7 +32,7 @@ namespace LetCode.Tests
         }
 
         [Test]
-        public void Test1()
+        public void Test()
         {
             // Navigate to Edit Page
             pages.GoToPage("Edit");
@@ -63,7 +67,7 @@ namespace LetCode.Tests
             Assert.That(isReadOnly, Is.EqualTo(true), "ReadOnly field was not readonly as expected.");
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Cleanup()
         {
             if (driver != null)

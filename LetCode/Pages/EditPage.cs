@@ -3,12 +3,12 @@ using OpenQA.Selenium;
 
 namespace LetCode.Pages
 {
-    class Edit
+    class EditPage
     {
         private IWebDriver _driver;
         private CustomMethod custom;
 
-        public Edit(IWebDriver driver)
+        public EditPage(IWebDriver driver)
         {
             _driver = driver;
             custom = new CustomMethod(_driver);
