@@ -4,19 +4,27 @@ using OpenQA.Selenium;
 
 namespace LetCode.Pages
 {
+<<<<<<< HEAD:LetCode/Pages/EditPage.cs
     /// <summary>
     /// Page object for the Edit test page at letcode.in/test.
     /// Encapsulates interactions with input fields and their properties.
     /// </summary>
     public class EditPage
+=======
+    class Edit
+>>>>>>> parent of 600816b (end of button test):LetCode/Pages/Edit.cs
     {
         private readonly IWebDriver driver;
         private readonly CustomMethod custom;
 
+<<<<<<< HEAD:LetCode/Pages/EditPage.cs
         /// <summary>
         /// Initializes the edit page with a web driver.
         /// </summary>
         public EditPage(IWebDriver driver)
+=======
+        public Edit(IWebDriver driver)
+>>>>>>> parent of 600816b (end of button test):LetCode/Pages/Edit.cs
         {
             this.driver = driver ?? throw new ArgumentNullException(nameof(driver));
             this.custom = new CustomMethod(this.driver);

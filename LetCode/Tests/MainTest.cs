@@ -7,6 +7,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace LetCode.Tests
 {
+<<<<<<< HEAD:LetCode/Tests/TestEdit.cs
     /// <summary>
     /// Test class for edit page functionality.
     /// Tests input field interactions including typing, tab navigation, clearing, and field states.
@@ -28,6 +29,16 @@ namespace LetCode.Tests
         /// </summary>
         [OneTimeSetUp]
         public void GlobalSetup()
+=======
+    public class MainTest
+    {
+        private IWebDriver driver;
+        private LetCodePages pages;
+        private Edit test;
+        private Actions action;
+
+        public MainTest()
+>>>>>>> parent of 600816b (end of button test):LetCode/Tests/MainTest.cs
         {
             var options = new ChromeOptions();
             options.AddArgument("--no-sandbox");
@@ -36,8 +47,13 @@ namespace LetCode.Tests
             driver = new ChromeDriver(options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(DefaultTimeout);
             pages = new LetCodePages(driver);
+<<<<<<< HEAD:LetCode/Tests/TestEdit.cs
             editPage = new EditPage(driver);
             actions = new Actions(driver);
+=======
+            test = new Edit(driver);
+            action = new Actions(driver);
+>>>>>>> parent of 600816b (end of button test):LetCode/Tests/MainTest.cs
         }
 
         /// <summary>
@@ -56,7 +72,7 @@ namespace LetCode.Tests
         /// Tests text input, tab navigation, field clearing, and field states.
         /// </summary>
         [Test]
-        public void Test()
+        public void Test1()
         {
             // 1. Enter full name
             const string expectedName = "ahmad alswaiti";
@@ -89,10 +105,14 @@ namespace LetCode.Tests
             Assert.That(isReadOnly, Is.True, "ReadOnly field was not readonly as expected.");
         }
 
+<<<<<<< HEAD:LetCode/Tests/TestEdit.cs
         /// <summary>
         /// One-time teardown executed after all edit tests.
         /// </summary>
         [OneTimeTearDown]
+=======
+        [TearDown]
+>>>>>>> parent of 600816b (end of button test):LetCode/Tests/MainTest.cs
         public void Cleanup()
         {
             try
