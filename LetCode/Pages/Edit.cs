@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 ﻿using System;
 using LetCode.Utils;
+=======
+﻿using LetCode.Utils;
+>>>>>>> parent of 600816b (end of button test)
 using OpenQA.Selenium;
 
 namespace LetCode.Pages
 {
+<<<<<<< HEAD
 <<<<<<< HEAD:LetCode/Pages/EditPage.cs
     /// <summary>
     /// Page object for the Edit test page at letcode.in/test.
@@ -70,10 +75,43 @@ namespace LetCode.Pages
         /// <summary>
         /// Clears the text from the clear text field.
         /// </summary>
+=======
+    class Edit
+    {
+        private IWebDriver _driver;
+        private CustomMethod custom;
+
+        public Edit(IWebDriver driver)
+        {
+            _driver = driver;
+            custom = new CustomMethod(_driver);
+        }
+        public  IWebElement Name => _driver.FindElement(By.Id("fullName"));
+
+        public IWebElement TextAndTab => _driver.FindElement(By.Id("join"));
+        public IWebElement GetData => _driver.FindElement(By.Id("getMe"));
+        public IWebElement ClearText => _driver.FindElement(By.Id("clearMe"));
+        private IWebElement DisabledField => _driver.FindElement(By.Id("noEdit"));
+        public IWebElement ReadOnly => _driver.FindElement(By.Id("dontwrite"));
+        public void EnterFullName(string fullName)
+        {
+            custom.Type(Name, fullName);
+        }
+        public void AddText(string anyText)
+        {
+            custom.Type(TextAndTab, anyText);
+        }
+        public void Gettext()
+        {
+            custom.GetValue(GetData);
+        }
+
+>>>>>>> parent of 600816b (end of button test)
         public void RemoveText()
         {
             custom.ClearField(ClearText);
         }
+<<<<<<< HEAD
 
         /// <summary>
         /// Checks if the disabled field is enabled.
@@ -99,5 +137,25 @@ namespace LetCode.Pages
             string attr = ReadOnly.GetAttribute("readonly") ?? string.Empty;
             return !string.IsNullOrEmpty(attr) && (attr.Equals("true") || attr.Equals("readonly"));
         }
+=======
+        public bool CheckFieldIfItsEnabled()
+        {
+            return DisabledField.Enabled;
+
+        }
+
+        public string GetText()
+        {
+            string text = custom.GetValue(ReadOnly);
+            return text;
+        }
+        public bool CheckFieldIfItsReadOnly()
+        {
+            
+            string attr = ReadOnly.GetAttribute("readonly");
+            return attr != null && (attr == "true" || attr == "false");
+        }
+
+>>>>>>> parent of 600816b (end of button test)
     }
 }

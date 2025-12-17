@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 using System;
 using LetCode.Pages;
 using NUnit.Framework;
+=======
+using LetCode.Pages;
+>>>>>>> parent of 600816b (end of button test)
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 
 namespace LetCode.Tests
 {
+<<<<<<< HEAD
 <<<<<<< HEAD:LetCode/Tests/TestEdit.cs
     /// <summary>
     /// Test class for edit page functionality.
@@ -30,6 +35,8 @@ namespace LetCode.Tests
         [OneTimeSetUp]
         public void GlobalSetup()
 =======
+=======
+>>>>>>> parent of 600816b (end of button test)
     public class MainTest
     {
         private IWebDriver driver;
@@ -38,6 +45,7 @@ namespace LetCode.Tests
         private Actions action;
 
         public MainTest()
+<<<<<<< HEAD
 >>>>>>> parent of 600816b (end of button test):LetCode/Tests/MainTest.cs
         {
             var options = new ChromeOptions();
@@ -59,10 +67,20 @@ namespace LetCode.Tests
         /// <summary>
         /// Setup executed before each edit test.
         /// </summary>
+=======
+        {
+            driver = new ChromeDriver();
+            pages = new LetCodePages(driver);
+            test = new Edit(driver);
+            action = new Actions(driver);
+        }
+
+>>>>>>> parent of 600816b (end of button test)
         [SetUp]
         public void Setup()
         {
             driver.Manage().Window.Maximize();
+<<<<<<< HEAD
             driver.Navigate().GoToUrl(BaseUrl);
             pages.GoToPage("Edit");
         }
@@ -122,6 +140,54 @@ namespace LetCode.Tests
             finally
             {
                 driver?.Dispose();
+=======
+            driver.Navigate().GoToUrl("https://letcode.in/test");
+        }
+
+        [Test]
+        public void Test1()
+        {
+            // Navigate to Edit Page
+            pages.GoToPage("Edit");
+
+            // 1. Enter full name
+            test.EnterFullName("ahmad alswaiti");
+            string fullNameValue = test.Name.GetAttribute("value");
+            Console.WriteLine(fullNameValue);
+            Assert.That(fullNameValue, Is.EqualTo("ahmad alswaiti"), "Full name did not match.");
+
+            // 2. Add text and press TAB
+            test.AddText(" enough");
+            action.SendKeys(Keys.Tab).Perform();
+
+            // Assert value populated after TAB
+            string dataValue = test.GetData.GetAttribute("value");
+            Console.WriteLine(dataValue);
+            Assert.That(dataValue, Is.EqualTo("ortonikc"), "Data field did not return expected value.");
+
+            // 3. Remove text from ClearMe field
+            test.RemoveText();
+            Assert.That(test.ClearText.GetAttribute("value"), Is.EqualTo(string.Empty), "ClearText field was not cleared.");
+
+            // 4. Check if the Disabled field is enabled
+            bool isEnabled = test.CheckFieldIfItsEnabled();
+            Console.WriteLine(isEnabled ? "This field is not disabled." : "This field is disabled.");
+            Assert.That(isEnabled, Is.EqualTo(false), "Disabled field check failed.");
+
+            // 5. Check if the ReadOnly field is readonly
+            bool isReadOnly = test.CheckFieldIfItsReadOnly();
+            Console.WriteLine(isReadOnly ? "Field is read-only." : "Field is NOT read-only.");
+            Assert.That(isReadOnly, Is.EqualTo(true), "ReadOnly field was not readonly as expected.");
+        }
+
+        [TearDown]
+        public void Cleanup()
+        {
+            if (driver != null)
+            {
+                driver.Quit();
+                driver.Dispose();
+>>>>>>> parent of 600816b (end of button test)
             }
         }
     }

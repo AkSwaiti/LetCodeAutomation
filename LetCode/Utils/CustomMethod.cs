@@ -1,9 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium;
+=======
+﻿using OpenQA.Selenium;
+>>>>>>> parent of 600816b (end of button test)
 =======
 ﻿using OpenQA.Selenium;
 >>>>>>> parent of 600816b (end of button test)
@@ -83,6 +87,7 @@ namespace LetCode.Utils
             return element.GetAttribute("value") ?? string.Empty;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         /// <summary>
         /// Sends one or more keys to the active element (uses the shared Actions instance).
@@ -92,10 +97,14 @@ namespace LetCode.Utils
 =======
         public void PressOn( string key)
 >>>>>>> parent of 600816b (end of button test)
+=======
+        public void PressOn( string key)
+>>>>>>> parent of 600816b (end of button test)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentException("Key must not be null or empty", nameof(key));
             actions.SendKeys(key).Perform();
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         /// <summary>
@@ -221,6 +230,8 @@ namespace LetCode.Utils
                 return null;
             }
         }
+=======
+>>>>>>> parent of 600816b (end of button test)
 =======
 >>>>>>> parent of 600816b (end of button test)
     }
